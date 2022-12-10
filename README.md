@@ -7,8 +7,9 @@ Export translated files to GameMaker Manual
 
 # 安装依赖
 npm config set registry https://registry.npmmirror.com # 如果速度慢执行该命令
-npm install
+npm install -g pnpm # 推荐使用 pnpm 加快安装
+pnpm install
 
 # 同时导入文档和目录并注入翻译信息和 CSS
-npm run start:all
+pnpm run start:all
 ```

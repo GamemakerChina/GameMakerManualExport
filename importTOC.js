@@ -4,12 +4,12 @@ const glob = require("glob");
 const readline = require("readline");
 const jsbeautify = require("js-beautify").js;
 
-let export_directory_toc = "../build/whxdata/"
-let manual_directory_toc = "../GMS2-Robohelp-en/whxdata/"
-let locale_name = require("../setting.json")
-let json_global = require("../language/" + locale_name.group + "/global.json")
+let export_directory_toc = "../build/whxdata/";
+let manual_directory_toc = "../GMS2-Robohelp-en/whxdata/";
+let global_settings = require("../setting.json");
+let json_global = require("../language/" + global_settings.group + "/global.json");
 
-let regex = new RegExp("var toc \\= \\[\\{", "g")
+let regex = new RegExp("var toc \\= \\[\\{", "g");
 
 glob(manual_directory_toc + "toc*.new.js", {}, (err, files) => {
     for (let index = 0; index < files.length; index++) {
@@ -74,7 +74,7 @@ glob(manual_directory_toc + "toc*.new.js", {}, (err, files) => {
             }
         })
     }
-})
+});
 
 glob(export_directory_toc + "toc*.new.json", {}, (err, files)=>{
     if (err) {
@@ -86,4 +86,4 @@ glob(export_directory_toc + "toc*.new.json", {}, (err, files)=>{
             }
         }
     }
-})
+});

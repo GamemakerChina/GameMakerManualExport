@@ -3,6 +3,7 @@ const fs = require("fs");
 const glob = require("glob");
 
 let export_directory_toc = "../build/whxdata/"
+let glossary_json_filename = export_directory_toc + "gdata1.new.js"
 
 glob(export_directory_toc + "toc*.new.json", {}, (err, files)=>{
     if (err) {
@@ -15,3 +16,7 @@ glob(export_directory_toc + "toc*.new.json", {}, (err, files)=>{
         }
     }
 });
+
+if (fs.existsSync(glossary_json_filename)) {
+    fs.rmSync(glossary_json_filename);
+};

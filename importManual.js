@@ -19,8 +19,13 @@ function retHtml(str) {
     return str.match(regex);
 }
 
-function importTranslate(page, json) {
-    let html = page.html()
+function importTranslate(page, json, attr) {
+    let html
+    if(!attr){
+        html = page.html()
+    } else {
+        html = page.attr(attr)
+    }
     let key = removeHtml(html)
     let val = json[key]
     if (val !== undefined && val.length) {
@@ -34,7 +39,12 @@ function importTranslate(page, json) {
             }
             i++
         })
-        page.html(val)
+        if(!attr){
+            page.html(val)
+        } else {
+            page.attr(attr, val)
+        }
+        
     }
 }
 
@@ -63,6 +73,9 @@ glob(manual_directory + '**/*.htm', {}, (err, files) => {
             })
             $("th,.warning,.important,.optional").each(function(){
                 importTranslate($(this), json_global)
+            })
+            $(".tooltip").each(function(){
+                importTranslate($(this),json_global,"title")
             })
             glob(patch_directory + "*.js", {}, (err, jsfile)=>{
                 if (err) {
