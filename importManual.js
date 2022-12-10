@@ -55,10 +55,13 @@ glob(manual_directory + '**/*.htm', {}, (err, files) => {
             } else {
                 continue
             }
-            $("p, h1, h2, h3, td, li, a").each(function(){
+            $("p,h1,h2,h3,td,li,a,div.dropspotnote").each(function(){
                 importTranslate($(this), json)
             })
-            $("h4, th, .warning, .important, .optional").each(function(){
+            $("div.footer a,h4,caption").each(function(){
+                importTranslate($(this), json_global)
+            })
+            $("th,.warning,.important,.optional").each(function(){
                 importTranslate($(this), json_global)
             })
             glob(patch_directory + "*.js", {}, (err, jsfile)=>{
