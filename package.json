@@ -6,7 +6,7 @@
   "author": "LiarOnce",
   "license": "MIT",
   "scripts": {
-    "start:all": "node deleteTempJSON.js && node importManual.js && node importTOC.js",
+    "start:all": "node deleteTempJSON.js && node importManual.js && node importTOC.js && node importGlossary.js",
     "clean:json": "node deleteTempJSON.js"
   },
   "dependencies": {
