@@ -6,13 +6,17 @@
   "author": "LiarOnce",
   "license": "MIT",
   "scripts": {
-    "start:all": "node deleteTempJSON.js && node importManual.js && node importTOC.js && node importGlossary.js",
+    "start:import": "node importManual.js && node importTOC.js && node importGlossary.js",
+    "start:team": "node insertTeam.js",
+    "clean:all": "node deleteBuild.js && node deleteTempJSON.js",
+    "clean:import": "node deleteBuild.js",
     "clean:json": "node deleteTempJSON.js"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
     "glob": "^8.0.3",
     "js-beautify": "^1.14.7",
-    "readline": "^1.3.0"
+    "readline": "^1.3.0",
+    "rimraf": "^3.0.2"
   }
 }

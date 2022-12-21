@@ -4,12 +4,12 @@ const glob = require("glob")
 const fs = require("fs")
 
 let regex = /(<([^>]+)>)/ig
-let locale_name = require("../setting.json")
-let translation_directory = "../language/" + locale_name.group + "/www/"
+let settings = require("../setting.json")
+let translation_directory = "../language/" + settings.group + "/www/"
 let manual_directory = "../GMS2-Robohelp-en/"
 let export_directory = "../build/"
 let patch_directory = "../patch/static_patch/"
-let json_global = require("../language/" + locale_name.group + "/global.json");
+let json_global = require("../language/" + settings.group + "/global.json");
 
 function removeHtml(str) {
     return str.replace(regex, "{}");
@@ -110,12 +110,3 @@ glob(manual_directory + '**/*.htm', {}, (err, files) => {
 })
 
 fs.cpSync(patch_directory, export_directory + "assets/static_patch/", {recursive: true})
-
-// 插入译者信息
-let content = fs.readFileSync(export_directory + "Content.htm").toString()
-let team_patch = fs.readFileSync("../patch/team.htm").toString()
-let $ = cheerio.load(content)
-
-$('p').eq(3).empty().addClass('team').append(team_patch)
-
-fs.writeFileSync(export_directory + "Content.htm", $.html())
