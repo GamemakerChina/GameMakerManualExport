@@ -66,7 +66,10 @@ rl.on("close", () => {
     let glossary_json_translated = require(glossary_json_filename);
     let glossary_js_template = `
     (function() {
-        var glossary = ${JSON.stringify(glossary_json_translated)};
+        var glossary = {
+            "type": "data",
+            "entrys": ${JSON.stringify(glossary_json_translated)}
+        };
         window.rh.model.publish(rh.consts('KEY_TEMP_DATA'), glossary, {
             sync: true
         });
