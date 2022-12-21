@@ -14,6 +14,8 @@ let glossary_original = fs.readFileSync(glossary_file).toString();
 let glossary_beautify = jsbeautify(glossary_original, { indent_size: 4, space_in_empty_paren: true });
 fs.writeFileSync(glossary_file, glossary_beautify);
 
+let glossary_special = require("../language/" + global_settings.group + "/glossarySpecial.json")
+
 let glossary_stream_read = fs.createReadStream(glossary_file);
 let glossary_json_filename = "./gdata1.new.json";
 let rl = readline.createInterface({
@@ -47,17 +49,27 @@ rl.on('line', (line) => {
         case "})();":
             return "";
     }
-    fs.appendFileSync(glossary_json_filename, line.replace(regex, "[{").replace("}];", "}]"));
+    fs.appendFileSync(glossary_json_filename, line.replace(regex, "[{")
+                                                    .replace("}];", "}]")
+                                                    .replace(/\\r\\n/g, "") // 去除 \r\n（巨坑x1）
+                                                    .replace(/\u00a0/g, "&nbsp;") // 替换 Unicode 不可见字符 U+00a0为转义字符 &nbsp;（巨坑x2）
+                                                    .replace(">", "&gt;")  // 替换 > 为转义字符 &gt;（巨坑x3）
+                                                    );
 });
 
 rl.on("close", () => {
     if (fs.existsSync(glossary_json_filename)){
         let glossary_json = require(glossary_json_filename);
         for (let i = 0; i < glossary_json.length; i++){
-            if (json_global[glossary_json[i].value]) {
+            // YoYo 你们文档写得很好，下次别写了
+            if (json_global[glossary_json[i].value]) { // 一般情况下的匹配
                 if (glossary_json[i].value !== json_global[glossary_json[i].value]) {
                     glossary_json[i].value = json_global[glossary_json[i].value]
                 }
+            } else {
+                // 未匹配时输出所在的位置，并使用备用方案
+                console.log(glossary_json[i].name + "is not be translated, use glossarySpecial.json")
+                glossary_json[i].value = glossary_special[glossary_json[i].name]
             }
         }
         fs.writeFileSync(glossary_json_filename, JSON.stringify(glossary_json, null, "\t"));
