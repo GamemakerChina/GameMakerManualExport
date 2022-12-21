@@ -30,8 +30,9 @@ function importTranslate(page, json, attr) {
     let val = json[key]
     if (val !== undefined && val.length) {
         let f = retHtml(html)
+        let i = 0
         if (f) f.forEach((v, k) => {
-            var tmp=val.replace("{"+i+"}",v)
+            var tmp=val.replace("{"+ i +"}",v)
             if(tmp===val){
                 val=val.replace("{}",v)
             }else{
@@ -81,8 +82,8 @@ glob(manual_directory + '**/*.htm', {}, (err, files) => {
                 if (err) {
                     console.log(err)
                 } else {
-                    for (let index = 0; index < files.length; index++) {
-                        let jsFilename = jsfile[index].substring(9)
+                    for (let index = 0; index < jsfile.length; index++) {
+                        let jsFilename = jsfile[index].substring(9, 0)
                         let appendJS = '<script type="text/javascript" src="assets/static_patch/' + jsFilename + '}"/>'
                         $('head').append(appendJS)
                     }
@@ -92,8 +93,8 @@ glob(manual_directory + '**/*.htm', {}, (err, files) => {
                 if (err) {
                     console.log(err)
                 } else {
-                    for (let index = 0; index < files.length; index++) {
-                        let cssFilename = cssfile[index].substring(9)
+                    for (let index = 0; index < cssfile.length; index++) {
+                        let cssFilename = cssfile[index].substring(9, 0)
                         let appendCSS = '<link rel="stylesheet" type="text/css" href="assets/static_patch/' + cssFilename + '}"/>'
                         $('head').append(appendCSS)
                     }
