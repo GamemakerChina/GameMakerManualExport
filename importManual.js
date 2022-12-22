@@ -66,7 +66,7 @@ glob(manual_directory + '**/*.htm', {}, (err, files) => {
             } else {
                 continue
             }
-            $("p,h1,h2,h3,td,li,a,div.dropspotnote").each(function(){
+            $("p,h1,h2,h3,td,li,a,div.dropspotnote,figcaption,.expandtext").each(function(){
                 importTranslate($(this), json)
             })
             $("div.footer a,h4,caption").each(function(){
