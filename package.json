@@ -6,11 +6,11 @@
   "author": "LiarOnce",
   "license": "MIT",
   "scripts": {
-    "start:import": "node importManual.js && node importTOC.js && node importGlossary.js",
-    "start:team": "node insertTeam.js",
-    "clean:all": "node deleteBuild.js && node deleteTempJSON.js",
-    "clean:import": "node deleteBuild.js",
-    "clean:json": "node deleteTempJSON.js"
+    "start:import": "node static_ImportManual.js && node static_ImportTOC.js && node static_ImportGlossary.js",
+    "start:team": "node static_InsertTeam.js",
+    "clean:all": "node universal_DeleteBuild.js && node static_deleteTempJSON.js",
+    "clean:import": "node universal_DeleteBuild.js",
+    "clean:json": "node static_deleteTempJSON.js"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",

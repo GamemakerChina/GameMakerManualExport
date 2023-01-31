@@ -1,5 +1,6 @@
 node_modules
 *.json
+*.htm*
 
 package-lock.json
 pnpm-lock.yaml
