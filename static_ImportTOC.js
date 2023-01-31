@@ -3,6 +3,7 @@ const fs = require("fs");
 const glob = require("glob");
 const readline = require("readline");
 const jsbeautify = require("js-beautify").js;
+const path = require("path");
 
 let export_directory_toc = "../build/whxdata/";
 let manual_directory_toc = "../GMS2-Robohelp-en/whxdata/";
@@ -20,7 +21,7 @@ glob(manual_directory_toc + "toc*.new.js", {}, (err, files) => {
 
         // 逐行读取内容
         let toc_stream_read = fs.createReadStream(files[index])
-        let toc_filename = export_directory_toc + files[index].substring(28, files[index].length - 3)
+        let toc_filename = export_directory_toc + path.basename(files[index], ".js")
         let toc_write_json = toc_filename + ".json"
         let rl = readline.createInterface({
             input: toc_stream_read

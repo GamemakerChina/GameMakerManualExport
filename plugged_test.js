@@ -2,9 +2,11 @@
 const cheerio = require("cheerio");
 const fs = require("fs");
 
-let template = cheerio.load(fs.readFileSync("template.htm").toString());
-let $ = cheerio.load(fs.readFileSync("Additional_Information.htm").toString());
+let generateDep = "js-and-css.htm";
+let dep = fs.readFileSync(generateDep).toString();
+let template = cheerio.load(fs.readFileSync("tests/template.htm").toString());
+let $ = cheerio.load(fs.readFileSync("tests/Additional_Information.htm").toString());
 
-template.html().replace("{importHtml}", $)
+$("head").prepend(dep)
 // console.log(template)
-fs.writeFileSync("test.htm", template.html());
+fs.writeFileSync("test.htm", $.html());

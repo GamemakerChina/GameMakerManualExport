@@ -6,7 +6,7 @@
   "author": "LiarOnce",
   "license": "MIT",
   "scripts": {
-    "start:import": "node static_ImportManual.js && node static_ImportTOC.js && node static_ImportGlossary.js",
+    "start:import": "node universal_GenerateHeadAssets.js && node static_ImportManual.js && node static_ImportTOC.js && node static_ImportGlossary.js",
     "start:team": "node static_InsertTeam.js",
     "clean:all": "node universal_DeleteBuild.js && node static_deleteTempJSON.js",
     "clean:import": "node universal_DeleteBuild.js",

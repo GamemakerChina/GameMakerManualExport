@@ -1,6 +1,7 @@
 "use strict";
 const cheerio = require("cheerio")
 const glob = require("glob")
+const path = require("path");
 const fs = require("fs")
 
 let regex = /(<([^>]+)>)/ig
@@ -57,7 +58,7 @@ glob(manual_directory + '**/*.htm', {}, (err, files) => {
         console.log("错误：" + err)
     } else {
         for (let index = 0; index < files.length; index++) {
-            let filename = files[index].substring(20, files[index].length - 4)
+            let filename = path.basename(files[index], ".htm")
             // console.log(filename)
             let $ = cheerio.load(fs.readFileSync(files[index]).toString())
             let json
@@ -78,28 +79,8 @@ glob(manual_directory + '**/*.htm', {}, (err, files) => {
             $(".tooltip").each(function(){
                 importTranslate($(this),json_global,"title")
             })
-            glob(patch_directory + "*.js", {}, (err, jsfile)=>{
-                if (err) {
-                    console.log(err)
-                } else {
-                    for (let index = 0; index < jsfile.length; index++) {
-                        let jsFilename = jsfile[index].substring(9, 0)
-                        let appendJS = '<script type="text/javascript" src="assets/static_patch/' + jsFilename + '}"/>'
-                        $('head').append(appendJS)
-                    }
-                }
-            })
-            glob(patch_directory + "*.css", {}, (err, cssfile)=>{
-                if (err) {
-                    console.log(err)
-                } else {
-                    for (let index = 0; index < cssfile.length; index++) {
-                        let cssFilename = cssfile[index].substring(9, 0)
-                        let appendCSS = '<link rel="stylesheet" type="text/css" href="assets/static_patch/' + cssFilename + '}"/>'
-                        $('head').append(appendCSS)
-                    }
-                }
-            })
+            let generateDep = fs.readFileSync("js-and-css.htm").toString(); 
+            $('head').prepend(generateDep)
             fs.writeFile(export_directory + filename + ".htm", $.html(), (err) => {
                 if (err) {
                     console.log(err);
