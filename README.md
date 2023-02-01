@@ -10,11 +10,14 @@ npm config set registry https://registry.npmmirror.com # 如果速度慢执行�
 npm install -g pnpm # 推荐使用 pnpm 加快安装
 pnpm install
 
-# 同时导入文档、目录、词汇表并注入CSS
-pnpm run start:import
+# （注入式）同时导入文档、目录、词汇表并注入CSS
+pnpm run plugged:import
 
-# 注入翻译译者信息
-pnpm run start:team
+# （静态式）同时导入文档、目录、词汇表并注入CSS
+pnpm run static:import
+
+# （静态式）注入翻译译者信息
+pnpm run static:team
 
 # 清空全部
 pnpm run clean:all

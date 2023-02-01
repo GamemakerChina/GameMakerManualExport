@@ -9,7 +9,6 @@ let settings = require("../setting.json")
 let translation_directory = "../language/" + settings.group + "/www/"
 let manual_directory = "../GMS2-Robohelp-en/"
 let export_directory = "../build/"
-let patch_directory = "../patch/static_patch/"
 let json_global = require("../language/" + settings.group + "/global.json");
 
 function removeHtml(str) {
@@ -79,8 +78,8 @@ glob(manual_directory + '**/*.htm', {}, (err, files) => {
             $(".tooltip").each(function(){
                 importTranslate($(this),json_global,"title")
             })
-            let generateDep = fs.readFileSync("js-and-css.htm").toString(); 
-            $('head').prepend(generateDep)
+            // let generateDep = fs.readFileSync("js-and-css.htm").toString();
+            // $('head').prepend(generateDep)
             fs.writeFile(export_directory + filename + ".htm", $.html(), (err) => {
                 if (err) {
                     console.log(err);
@@ -90,4 +89,4 @@ glob(manual_directory + '**/*.htm', {}, (err, files) => {
     }
 })
 
-fs.cpSync(patch_directory, export_directory + "assets/static_patch/", {recursive: true})
+fs.cpSync("../" + settings.staticPath, export_directory + "assets/static_patch/", {recursive: true})
