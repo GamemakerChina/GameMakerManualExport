@@ -58,6 +58,7 @@ glob(manual_directory + '**/*.htm', {}, (err, files) => {
     } else {
         for (let index = 0; index < files.length; index++) {
             let filename = path.basename(files[index], ".htm")
+            let normalizeName = path.normalize(files[index])
             // console.log(filename)
             let $ = cheerio.load(fs.readFileSync(files[index]).toString())
             let json
@@ -78,8 +79,8 @@ glob(manual_directory + '**/*.htm', {}, (err, files) => {
             $(".tooltip").each(function(){
                 importTranslate($(this),json_global,"title")
             })
-            // let generateDep = fs.readFileSync("js-and-css.htm").toString();
-            // $('head').prepend(generateDep)
+            let generateDep = fs.readFileSync(normalizeName + ".head.htm")
+            $('head').prepend(generateDep)
             fs.writeFile(export_directory + filename + ".htm", $.html(), (err) => {
                 if (err) {
                     console.log(err);
