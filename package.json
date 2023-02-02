@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "plugged:import": "node plugged_ImportManual.js",
-    "static:import": "node universal_GenerateHeadAssets.js && node static_ImportManual.js && node static_ImportTOC.js && node static_ImportGlossary.js",
+    "static:import": "node universal_GenerateHeadAssets.js static && node static_ImportManual.js && node static_ImportTOC.js && node static_ImportGlossary.js",
     "static:team": "node static_InsertTeam.js",
     "clean:all": "node universal_DeleteBuild.js && node static_deleteTempJSON.js",
     "clean:import": "node universal_DeleteBuild.js",

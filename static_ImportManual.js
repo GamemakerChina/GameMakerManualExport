@@ -79,7 +79,7 @@ glob(manual_directory + '**/*.htm', {}, (err, files) => {
             $(".tooltip").each(function(){
                 importTranslate($(this),json_global,"title")
             })
-            let generateDep = fs.readFileSync(normalizeName + ".head.htm")
+            let generateDep = fs.readFileSync(normalizeName + ".head")
             $('head').prepend(generateDep)
             fs.writeFile(export_directory + filename + ".htm", $.html(), (err) => {
                 if (err) {
