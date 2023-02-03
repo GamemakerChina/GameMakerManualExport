@@ -23,7 +23,7 @@ pnpm run plugged:import
 pnpm run plugged:team
 
 # （静态式）生成依赖
-pnpm run plugged:gendep
+pnpm run static:gendep
 
 # （静态式）同时导入文档、目录、词汇表并外挂CSS
 pnpm run static:import
