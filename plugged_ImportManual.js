@@ -11,9 +11,6 @@ let manual_directory = "../GMS2-Robohelp-en/"
 let export_directory = "../build/"
 let json_global = fs.readFileSync("../language/" + settings.group + "/global.json").toString();
 
-// fs.cpSync(manual_directory, export_directory, {recursive: true})
-// fs.cpSync("../patch/import/", export_directory + "assets/import/", {recursive: true})
-
 glob(export_directory + '**/*.htm', {}, (err, files) => {
     if (err) {
         console.log("错误：" + err)
@@ -42,9 +39,3 @@ glob(export_directory + '**/*.htm', {}, (err, files) => {
         }
     }
 })
-
-// let template_complete = template.replace("{importHtml}", dep)
-//                                 .replace("{global}", json_global.toString())
-//                                 .replace("{json}", json_other.toString())
-// $("head").prepend(template_complete)
-// fs.writeFileSync("test.htm", $.html());

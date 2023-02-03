@@ -5,24 +5,24 @@ const fs = require("fs");
 const process = require('process');
 
 let settings = require("../setting.json")
-let manual_directory = "../GMS2-Robohelp-en/"
 let export_directory = "../build/"
 let build_options = process.argv.splice(2)
-let patch_directory
+let patch_directory, patch_final
 
 switch (build_options[0]) {
-    case "plugged":
+    case "plugged": // 外挂式所需依赖
         patch_directory = "../" + settings.importPath + "/"
+        patch_final = export_directory + "assets/import/"
         break;
 
-    case "static":
+    case "static": // 静态式所需依赖
         patch_directory = "../" + settings.staticPath + "/"
+        patch_final = export_directory + "assets/static_patch/"
         break;
 }
 
 console.log(build_options[0])
-// // fs.cpSync(manual_directory, export_directory, {recursive: true})
-fs.cpSync("../patch/import/", export_directory + "assets/import/", {recursive: true})
+fs.cpSync(patch_directory, patch_final, {recursive: true})
 
 glob(export_directory + '**/*.htm', {}, (err, files) => {
     if (err) {
@@ -32,7 +32,7 @@ glob(export_directory + '**/*.htm', {}, (err, files) => {
             let filename = path.normalize(files[index])
             let generateDep = filename + ".head"
             // console.log(generateDep)
-            glob(export_directory + "**/*.js", {}, (err, jsfile) => {
+            glob(patch_final + "**/*.js", {}, (err, jsfile) => {
                 if (err) {
                     console.log(err)
                 } else {
@@ -45,7 +45,7 @@ glob(export_directory + '**/*.htm', {}, (err, files) => {
                     }
                 }
             })
-            glob(export_directory + "**/*.css", {}, (err, cssfile) => {
+            glob(patch_final + "**/*.css", {}, (err, cssfile) => {
                 if (err) {
                     console.log(err)
                 } else {

@@ -49,8 +49,6 @@ function importTranslate(page, json, attr) {
     }
 }
 
-fs.cpSync(manual_directory, export_directory, {recursive: true})
-
 // 从记忆库替换导入翻译
 glob(manual_directory + '**/*.htm', {}, (err, files) => {
     if (err) {
@@ -79,8 +77,8 @@ glob(manual_directory + '**/*.htm', {}, (err, files) => {
             $(".tooltip").each(function(){
                 importTranslate($(this),json_global,"title")
             })
-            let generateDep = fs.readFileSync(normalizeName + ".head")
-            $('head').prepend(generateDep)
+            let generateDep = fs.readFileSync(normalizeName + ".head").toString()
+            $("head").prepend(generateDep)
             fs.writeFile(export_directory + filename + ".htm", $.html(), (err) => {
                 if (err) {
                     console.log(err);
@@ -89,5 +87,3 @@ glob(manual_directory + '**/*.htm', {}, (err, files) => {
         }
     }
 })
-
-fs.cpSync("../" + settings.staticPath, export_directory + "assets/static_patch/", {recursive: true})
