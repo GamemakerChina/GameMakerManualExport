@@ -7,9 +7,11 @@
   "license": "MIT",
   "scripts": {
     "init:build": "node universal_InitBuildFile.js",
+    "plugged:gendep": "node universal_GenerateHeadAssets.js plugged",
     "plugged:import": "node plugged_ImportManual.js",
     "plugged:team": "node plugged_InsertTeam.js",
-    "static:import": "node universal_GenerateHeadAssets.js static && node static_ImportManual.js && node static_ImportTOC.js && node static_ImportGlossary.js",
+    "static:gendep": "node universal_GenerateHeadAssets.js static",
+    "static:import": "node static_ImportManual.js && node static_ImportTOC.js && node static_ImportGlossary.js",
     "static:team": "node static_InsertTeam.js",
     "clean:all": "node universal_DeleteBuild.js && node universal_DeleteTemp.js",
     "clean:import": "node universal_DeleteBuild.js",

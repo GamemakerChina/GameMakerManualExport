@@ -55,7 +55,7 @@ glob(manual_directory + '**/*.htm', {}, (err, files) => {
         console.log("错误：" + err)
     } else {
         for (let index = 0; index < files.length; index++) {
-            let filename = path.basename(files[index], ".htm")
+            let filename = path.dirname(files[index]).split("/").splice(2).join("/") + "/" + path.basename(files[index], ".htm")
             let normalizeName = path.normalize(files[index])
             // console.log(filename)
             let $ = cheerio.load(fs.readFileSync(files[index]).toString())
@@ -77,7 +77,12 @@ glob(manual_directory + '**/*.htm', {}, (err, files) => {
             $(".tooltip").each(function(){
                 importTranslate($(this),json_global,"title")
             })
-            let generateDep = fs.readFileSync(normalizeName + ".head").toString()
+            let generateDep
+            if (fs.existsSync(normalizeName + ".head")) {
+                generateDep = fs.readFileSync(normalizeName + ".head").toString()
+            } else {
+                generateDep = ""
+            }
             $("head").prepend(generateDep)
             fs.writeFile(export_directory + filename + ".htm", $.html(), (err) => {
                 if (err) {

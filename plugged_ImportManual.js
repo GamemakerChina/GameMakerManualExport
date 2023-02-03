@@ -16,7 +16,7 @@ glob(export_directory + '**/*.htm', {}, (err, files) => {
         console.log("错误：" + err)
     } else {
         for (let index = 0; index < files.length; index++) {
-            let filename = path.dirname(files[index]).split("/").splice(2).join("/") + "/" +path.basename(files[index], ".htm")
+            let filename = path.dirname(files[index]).split("/").splice(2).join("/") + "/" + path.basename(files[index], ".htm")
             let normalizeName = path.normalize(files[index])
             let $ = cheerio.load(fs.readFileSync(files[index]))
             let json
