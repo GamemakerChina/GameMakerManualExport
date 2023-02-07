@@ -38,8 +38,9 @@ glob(export_directory + '**/*.htm', {}, (err, files) => {
                 } else {
                     for (let j = 0; j < jsfile.length; j++) {
                         let jsFilename = jsfile[j].split("/").splice(2).join("/")
-                        let jsPath = path.relative(path.dirname(filename), jsFilename).replace("GameMakerManualExport\\", "").replace("..\\..\\", "..\\")
-                        // console.log(jsPath)
+                        let jsPath = path.relative(path.dirname(filename), jsFilename)
+                                        .replace("GameMakerManualExport\\", "").replace("GameMakerManualExport/", "")
+                                        .replace("..\\..\\", "..\\").replace("../../", "../")                        // console.log(jsPath)
                         let appendJS = '<script type="text/javascript" src="' + jsPath + '"></script>\n'
                         fs.appendFileSync(export_directory + generateDep, appendJS)
                     }
@@ -51,8 +52,9 @@ glob(export_directory + '**/*.htm', {}, (err, files) => {
                 } else {
                     for (let i = 0; i < cssfile.length; i++) {
                         let cssFilename = cssfile[i].split("/").splice(2).join("/")
-                        let cssPath = path.relative(path.dirname(filename), cssFilename).replace("GameMakerManualExport\\", "").replace("..\\..\\", "..\\")
-                        // console.log(cssPath)
+                        let cssPath = path.relative(path.dirname(filename), cssFilename)
+                                        .replace("GameMakerManualExport\\", "").replace("GameMakerManualExport/", "")
+                                        .replace("..\\..\\", "..\\").replace("../../", "../")                        // console.log(cssPath)
                         let appendCSS = '<link rel="stylesheet" type="text/css" href="' + cssPath + '"/>\n'
                         fs.appendFileSync(export_directory + generateDep, appendCSS)
                     }
