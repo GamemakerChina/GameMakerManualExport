@@ -22,7 +22,7 @@ switch (build_options[0]) {
 }
 
 console.log(build_options[0])
-fs.cpSync(patch_directory, patch_final, {recursive: true})
+fs.cpSync(patch_directory, patch_final, {recursive: true, force: true})
 
 glob(export_directory + '**/*.htm', {}, (err, files) => {
     if (err) {
