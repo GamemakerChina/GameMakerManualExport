@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "init:build": "node universal_InitBuildFile.js",
-    "plugged:gendep": "node universal_GenerateHeadAssets.js plugged",
+    "plugged:gendep": "node universal_GenerateHeadAssets.js plugged && node universal_FixPath.js",
     "plugged:import": "node plugged_ImportManual.js",
     "plugged:team": "node plugged_InsertTeam.js",
     "static:gendep": "node universal_GenerateHeadAssets.js static",

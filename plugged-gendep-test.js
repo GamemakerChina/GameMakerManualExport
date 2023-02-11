@@ -27,8 +27,8 @@ glob(export_directory + '**/*.htm', {}, (err, files) => {
                         let jsFilename = jsfile[j].split("/").splice(2).join("/")
                         let jsPath = path.relative(path.dirname(filename), jsFilename)
                                             .replace("GameMakerManualExport\\", "").replace("GameMakerManualExport/", "")
-                                            .replace("..\\..\\", "..\\").replace("../../", "../")
-                        console.log(jsPath)
+                                            // .replace("..\\..\\", "..\\").replace("../../", "../")
+                        console.log(files[index] + " with " + jsPath)
                     }
                 }
             })
@@ -41,7 +41,7 @@ glob(export_directory + '**/*.htm', {}, (err, files) => {
                         let cssPath = path.relative(path.dirname(filename), cssFilename)
                                             .replace("GameMakerManualExport\\", "").replace("GameMakerManualExport/", "")
                                             .replace("..\\..\\", "..\\").replace("../../", "../")
-                        console.log(cssPath)
+                        console.log(files[index] + " with " + cssPath)
                     }
                 }
             })
