@@ -8,7 +8,7 @@
   "scripts": {
     "init:build": "node universal_InitBuildFile.js",
     "plugged:gendep": "node universal_GenerateHeadAssets.js plugged && node universal_FixPath.js",
-    "plugged:import": "node plugged_ImportManual.js",
+    "plugged:import": "node plugged_ImportManual.js && node plugged_AddHeadsToIndex.js",
     "plugged:team": "node plugged_InsertTeam.js",
     "static:gendep": "node universal_GenerateHeadAssets.js static",
     "static:import": "node static_ImportManual.js && node static_ImportTOC.js && node static_ImportGlossary.js",
