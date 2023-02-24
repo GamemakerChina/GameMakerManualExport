@@ -4,7 +4,6 @@ const glob = require("glob")
 const path = require("path");
 const fs = require("fs")
 
-let regex = /(<([^>]+)>)/ig
 let settings = require("../setting.json")
 let translation_directory = "../language/" + settings.group + "/www/"
 let manual_directory = "../GMS2-Robohelp-en/"
@@ -12,11 +11,16 @@ let export_directory = "../build/"
 let json_global = require("../language/" + settings.group + "/global.json");
 
 function removeHtml(str) {
-    return str.replace(regex, "{}");
+    str=str.replace(/(<([^>]+)>)/ig, "{}");
+    str=str.replace(/\r\n/g, '\n');
+    str=str.replace(/\n/g, '');
+    str=str.replace(/ {2,}/g, ' ');
+    return str
 }
 
 function retHtml(str) {
-    return str.match(regex);
+    var regex = /(<([^>]+)>)/ig
+	return str.match(regex);
 }
 
 function importTranslate(page, json, attr) {
@@ -32,11 +36,11 @@ function importTranslate(page, json, attr) {
         let f = retHtml(html)
         let i = 0
         if (f) f.forEach((v, k) => {
-            var tmp=val.replace("{"+ i +"}",v)
-            if(tmp===val){
-                val=val.replace("{}",v)
+            let tmp=val.replace("{"+ i +"}",v)
+            if(tmp === val){
+                val = val.replace("{}",v)
             }else{
-                val=tmp
+                val = tmp
             }
             i++
         })
