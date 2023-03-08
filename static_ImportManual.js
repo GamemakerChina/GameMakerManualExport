@@ -51,7 +51,8 @@ function importTranslate(page, json, attr) {
         }
     }
     if (key != val){
-        console.log(key + " is not translated.")
+        let unTranslatedLog = "\"" + key + "\" is not translated"
+        fs.appendFileSync("logs.txt", unTranslatedLog)
     }
 }
 
