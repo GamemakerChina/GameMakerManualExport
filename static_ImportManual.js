@@ -23,6 +23,21 @@ function retHtml(str) {
 	return str.match(regex);
 }
 
+function checkUnTranslated(page, json, attr, filename) {
+    let html
+    if(!attr){
+        html = page.html()
+    } else {
+        html = page.attr(attr)
+    }
+    let key = removeHtml(html)
+    let val = json[key]
+    if (key != val){
+        let unTranslatedLog = "\"" + key + "\" is not translated in " + filename + ".\n"
+        fs.appendFileSync("logs.txt", unTranslatedLog)
+    }
+}
+
 function importTranslate(page, json, attr) {
     let html
     if(!attr){
@@ -50,10 +65,6 @@ function importTranslate(page, json, attr) {
             page.attr(attr, val)
         }
     }
-    if (key != val){
-        let unTranslatedLog = "\"" + key + "\" is not translated"
-        fs.appendFileSync("logs.txt", unTranslatedLog)
-    }
 }
 
 // 从记忆库替换导入翻译
@@ -72,17 +83,21 @@ glob(manual_directory + '**/*.htm', {}, (err, files) => {
             } else {
                 continue
             }
-            $("p,h1,h2,h3,td,li,a,div.dropspotnote,figcaption,.expandtext").each(function(){
+            $("p:not(.hljs,.code_plain),h1,h2,h3,td,li,a,div.dropspotnote,figcaption,.expandtext").each(function(){
                 importTranslate($(this), json)
+                checkUnTranslated($(this), json, null, filename)
             })
             $("div.footer a,h4,caption").each(function(){
                 importTranslate($(this), json_global)
+                checkUnTranslated($(this), json_global, null, filename)
             })
             $("th,.warning,.important,.optional").each(function(){
                 importTranslate($(this), json_global)
+                checkUnTranslated($(this), json_global, null, filename)
             })
             $(".tooltip").each(function(){
-                importTranslate($(this),json_global,"title")
+                importTranslate($(this), json_global, "title")
+                checkUnTranslated($(this), json_global, "title", filename)
             })
             let generateDep
             if (fs.existsSync(normalizeName + ".head")) {
