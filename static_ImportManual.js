@@ -49,7 +49,9 @@ function importTranslate(page, json, attr) {
         } else {
             page.attr(attr, val)
         }
-        
+    }
+    if (key != val){
+        console.log(key + " is not translated.")
     }
 }
 
