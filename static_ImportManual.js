@@ -85,20 +85,18 @@ glob(manual_directory + '**/*.htm', {}, (err, files) => {
             }
             $("p:not(.hljs,.code_plain),h1,h2,h3,td,li,a,div.dropspotnote,figcaption,.expandtext").each(function(){
                 importTranslate($(this), json)
-                checkUnTranslated($(this), json, null, filename)
             })
             $("div.footer a,h4,caption").each(function(){
                 importTranslate($(this), json_global)
-                checkUnTranslated($(this), json_global, null, filename)
             })
             $("th,.warning,.important,.optional").each(function(){
                 importTranslate($(this), json_global)
-                checkUnTranslated($(this), json_global, null, filename)
             })
             $(".tooltip").each(function(){
                 importTranslate($(this), json_global, "title")
-                checkUnTranslated($(this), json_global, "title", filename)
             })
+            checkUnTranslated($(this), json, null, filename)
+            checkUnTranslated($(this), json_global, null, filename)
             let generateDep
             if (fs.existsSync(normalizeName + ".head")) {
                 generateDep = fs.readFileSync(normalizeName + ".head").toString()
