@@ -10,11 +10,19 @@ let manual_directory = "../GMS2-Robohelp-en/"
 let export_directory = "../build/"
 let json_global = require("../language/" + settings.group + "/global.json");
 
+if (fs.existsSync("logs.txt")) {
+    fs.rmSync("logs.txt")
+}
+
 function removeHtml(str) {
-    str=str.replace(/(<([^>]+)>)/ig, "{}");
-    str=str.replace(/\r\n/g, '\n');
-    str=str.replace(/\n/g, '');
-    str=str.replace(/ {2,}/g, ' ');
+    if (str === null) {
+        str=""
+    } else {
+        str=str.replace(/(<([^>]+)>)/ig, "{}");
+        str=str.replace(/\r\n/g, '\n');
+        str=str.replace(/\n/g, '');
+        str=str.replace(/ {2,}/g, ' ');
+    }
     return str
 }
 
@@ -23,22 +31,7 @@ function retHtml(str) {
 	return str.match(regex);
 }
 
-function checkUnTranslated(page, json, attr, filename) {
-    let html
-    if(!attr){
-        html = page.html()
-    } else {
-        html = page.attr(attr)
-    }
-    let key = removeHtml(html)
-    let val = json[key]
-    if (key != val){
-        let unTranslatedLog = "\"" + key + "\" is not translated in " + filename + ".\n"
-        fs.appendFileSync("logs.txt", unTranslatedLog)
-    }
-}
-
-function importTranslate(page, json, attr) {
+function importTranslate(page, json, attr, fileName) {
     let html
     if(!attr){
         html = page.html()
@@ -64,6 +57,9 @@ function importTranslate(page, json, attr) {
         } else {
             page.attr(attr, val)
         }
+    } else if (key !== val) {
+        let unTranslatedLog = "\"" + key + "\" is not translated in " + fileName + ".\n"
+        fs.appendFileSync("logs.txt", unTranslatedLog)
     }
 }
 
@@ -83,20 +79,20 @@ glob(manual_directory + '**/*.htm', {}, (err, files) => {
             } else {
                 continue
             }
-            $("p:not(.hljs,.code_plain),h1,h2,h3,td,li,a,div.dropspotnote,figcaption,.expandtext").each(function(){
-                importTranslate($(this), json)
+            let translation_lists = "p,h1,h2,h3,td:nth-child(3),li,a,div.dropspotnote,figcaption,.expandtext"
+            let translation_ignore = "#rh-topic-header,p.code"
+            $(translation_lists).each(function(){
+                importTranslate($(this).not(translation_ignore), json, null, filename)
             })
             $("div.footer a,h4,caption").each(function(){
-                importTranslate($(this), json_global)
+                importTranslate($(this), json_global, null, filename)
             })
             $("th,.warning,.important,.optional").each(function(){
-                importTranslate($(this), json_global)
+                importTranslate($(this), json_global, null, filename)
             })
             $(".tooltip").each(function(){
-                importTranslate($(this), json_global, "title")
+                importTranslate($(this), json_global, "title", filename)
             })
-            checkUnTranslated($, json, null, filename)
-            checkUnTranslated($, json_global, null, filename)
             let generateDep
             if (fs.existsSync(normalizeName + ".head")) {
                 generateDep = fs.readFileSync(normalizeName + ".head").toString()
