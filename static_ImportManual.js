@@ -95,8 +95,8 @@ glob(manual_directory + '**/*.htm', {}, (err, files) => {
             $(".tooltip").each(function(){
                 importTranslate($(this), json_global, "title")
             })
-            checkUnTranslated($(this), json, null, filename)
-            checkUnTranslated($(this), json_global, null, filename)
+            checkUnTranslated($, json, null, filename)
+            checkUnTranslated($, json_global, null, filename)
             let generateDep
             if (fs.existsSync(normalizeName + ".head")) {
                 generateDep = fs.readFileSync(normalizeName + ".head").toString()
